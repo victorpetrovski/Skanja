@@ -24,7 +24,7 @@ class User extends Model {
      * Phone Number
      * @var string
      */
-    public $phone_number;
+    public $contact_phone_number;
 
     /**
      * Has Anonymous Profile Picture
@@ -162,7 +162,7 @@ class User extends Model {
      * Email
      * @var string
      */
-    public $email;
+    public $public_email;
 
     /**
      * External Url
@@ -205,17 +205,17 @@ class User extends Model {
     /**
      * @return string
      */
-    public function getPhoneNumber()
+    public function getContactPhoneNumber()
     {
-        return $this->phone_number;
+        return $this->contact_phone_number;
     }
 
     /**
-     * @param string $phone_number
+     * @param string $contact_phone_number
      */
-    public function setPhoneNumber($phone_number)
+    public function setContactPhoneNumber($contact_phone_number)
     {
-        $this->phone_number = $phone_number;
+        $this->contact_phone_number = $contact_phone_number;
     }
 
     /**
@@ -575,7 +575,7 @@ class User extends Model {
      */
     public function getEmail()
     {
-        return $this->email;
+        return $this->public_email;
     }
 
     /**

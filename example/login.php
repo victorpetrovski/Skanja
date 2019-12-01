@@ -1,24 +1,23 @@
 <?php
+session_start();
+ini_set("display_errors", 1);
+error_reporting(E_ALL);
 
-   ini_set("display_errors", 1);
-   error_reporting(E_ALL);
+include("../vendor/autoload.php");
 
-   include("../vendor/autoload.php");
+use \Instagram\Instagram;
 
-   use \Instagram\Instagram;
+$url_redirect = dirname($_SERVER['REQUEST_URI']);
 
-   $url_redirect =  dirname($_SERVER['REQUEST_URI']);
+if (isset($_POST['username']) && isset($_POST['password'])) {
 
-   if(isset($_POST['username']) && isset($_POST['password'])){
+    $instagram = new \Instagram\Instagram();
 
-   $instagram = new \Instagram\Instagram();
-   //$instagram->setProxy("159.89.186.226:80");
+    try {
 
-   try{
+        $response = $instagram->login($_POST['username'], $_POST['password']);
 
-         $response = $instagram->login($_POST['username'], $_POST['password']);
-
-          if(!is_object($response) && isset($response['code']) && $response['code'] == 201){
+        if (!is_object($response) && isset($response['code']) && $response['code'] == 201) {
 
             $url = $response['url'];
 
@@ -41,21 +40,20 @@
 
             exit();
 
-          }
+        }
 
+        $_SESSION["user_session"] = $instagram->saveSession();
 
-          $user = $instagram->saveSession();
+        include("user.php");
+        exit();
 
-          include("user.php");
-          exit();
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+        header("Location: " . $url_redirect . "/login_form.php?error=" . $error);
+        exit();
+    }
 
-   }catch(Exception $e){
-     $error = $e->getMessage();
-     header("Location: ".$url_redirect."/login_form.php?error=".$error);
-     exit();
-   }
-
-   }else{
-     header("Location: ".$url_redirect."/login_form.php?error=enter valid username and password");
-     exit();
-   }
+} else {
+    header("Location: " . $url_redirect . "/login_form.php?error=enter valid username and password");
+    exit();
+}

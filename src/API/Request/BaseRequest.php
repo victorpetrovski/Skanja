@@ -99,7 +99,7 @@ abstract class BaseRequest extends Request {
     }
 
     public function throwExceptionIfResponseNotOk(){
-        return true;
+        return false;
     }
 
     /**

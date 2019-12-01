@@ -853,9 +853,10 @@ class Instagram {
         $request = new InfoUserRequest($this, $userId);
         $response = $request->execute();
 
-        if(!$response->isOk()){
-            throw new InstagramException(sprintf("Failed to getUserInfo: [%s] %s", $response->getStatus(), $response->getMessage()));
-        }
+//        if(!$response->isOk()){
+//            return null;
+//            // throw new InstagramException(sprintf("Failed to getUserInfo: [%s] %s", $response->getStatus(), $response->getMessage()));
+//        }
 
         return $response;
 
@@ -1033,7 +1034,7 @@ class Instagram {
         }
 
         if($phoneNumber == null){
-            $phoneNumber = $currentUser->getPhoneNumber();
+            $phoneNumber = $currentUser->getContactPhoneNumber();
         }
 
         if($gender == null){

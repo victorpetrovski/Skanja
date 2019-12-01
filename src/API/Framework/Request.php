@@ -200,7 +200,8 @@ abstract class Request {
         //print_R($this->getCookies());print_R($this->getHeaders());
 
         $error_format = "Instagram Request failed: [%s] [%s] %s";
-
+        echo "Url: ".$this->getUrl();
+        echo "<br>";
         switch($this->getMethod()){
 
             case self::GET: {
@@ -232,9 +233,9 @@ abstract class Request {
             }
 
         }
-
-        return new Response($curl, $data);
-
+        $response = new Response($curl, $data);
+        // echo "Response: ". print_r($response);
+        return $response;
     }
 
 }
